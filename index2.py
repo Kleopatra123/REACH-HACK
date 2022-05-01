@@ -84,7 +84,7 @@ def main():
 
 #generate number directly
 
-
+'''
 #initialize global variables
 player1 = "Human"
 player2 = "Alien"
@@ -141,3 +141,4 @@ else:
         Game()
     else:
         exit()
+ '''
