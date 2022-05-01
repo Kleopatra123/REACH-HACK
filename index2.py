@@ -33,7 +33,7 @@ def main():
     before_Player1 = get_balance(acc_player1)
     before_Player2 = get_balance(acc_player2)
 
-    ctc_alice    = rpc('/acc/contract', acc_player1)
+    ctc_player1    = rpc('/acc/contract', acc_player1)
     def player(who):
         def getGuess():
             while player2PlayCount != 3 and hand2[i2 - 1] != num:
@@ -43,7 +43,8 @@ def main():
                         print(who, "played ", hand1[indexHand1])
                         if hand1[indexHand1] == num:
                             break
-                        return 1
+                        a = 1
+                        return a
                     i =+1
                     
                     
@@ -55,13 +56,36 @@ def main():
                         print(who,"played", hand2[ind])
                         if hand2[ind] == num:
                             break
-                        return 2
+                        b = 2
+                        return b
                             
                     i2 =+ 1
                     player2PlayCount =+ 1
                 
             if player2PlayCount == 3 :
+                c = 3
+                return c
+        def getResult():
+            a = getGuess()
+            b = getGuess()
+            c = getGuess()
+            '''
+            a = getGuess(player2)
+            b = getGuess(player2)
+            c = getGuess(player2)
+            '''
+
+            if getGuess(player1) == a:
+                return 1
+            elif getGuess(player2) == b:
+                return 2
+            elif getGuess(player1) and getGuess(player2) == c:
                 return 3
+            elif getGuess(player1) == a and getGuess(player2) == b:
+                return 4
+        def informTimeout():
+            print('%s observed a timeout' % who)
+            
 
         def seeResult (n):
            print("saw result")
@@ -69,7 +93,55 @@ def main():
         return {'stdlib.hasRandom': True,
                 'getGuess':          getGuess,
                 'seeResult':       seeResult,
+                'getResult':         getResult,
+                'informTimeout':    informTimeout
                }
+    def play_1():
+        rpc_callbacks(
+            '/backend/Player1',
+            ctc_player1,
+            dict(wager=rpc('/stdlib/parseCurrency', 5), deadline=10, **player('player1')))
+
+    alice = Thread(target=play_1)
+    alice.start()
+ 
+    def play_2():
+        def acceptWager(amt):
+            wager2 = input(int("Player2 do you accept the wager 'Y' or 'N': "))
+            if wager2 == 'Y':
+                print('Player2 accepts the wager of %s' % fmt(amt))
+
+                ctc_player2 = rpc('/acc/contract', acc_player2, rpc('/ctc/getInfo', ctc_player1))
+                rpc_callbacks(
+                    '/backend/Player2',
+                    ctc_player2,
+                    dict(acceptWager=acceptWager, **player('player2')))
+                rpc('/forget/ctc', ctc_player2)
+                #return 1
+                
+            else:
+                print("CANNOT PLAY GAME WITHOUT WAGER")
+                exit()
+
+
+    bob = Thread(target=play_2)
+    bob.start()
+
+    alice.join()
+    bob.join()
+
+    after_player1 = get_balance(acc_player1)
+    after_player2   = get_balance(acc_player2)
+
+    print('Player1 went from %s to %s' % (before_Player1, after_player1))
+    print('Player2 went from %s to %s' % (before_Player2,   after_player2))
+
+    rpc('/forget/acc', acc_player1, acc_player2)
+    rpc('/forget/ctc', ctc_player1)
+
+
+if __name__ == '__main__':
+    main()
                     
                     
                 
@@ -141,4 +213,4 @@ else:
         Game()
     else:
         exit()
- '''
+'''
