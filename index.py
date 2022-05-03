@@ -1,8 +1,10 @@
 # flake8: noqa
 
+import time
 import random
 from threading import Thread
 from reach_rpc import mk_rpc
+
 
 
 def main():
@@ -25,16 +27,26 @@ def main():
 
     
     OUTCOME      = ['Bob wins', 'Draw', 'Alice wins,']
+    
 
     def player(who):
         def getHand():
-            hand = int(input("ENTER A NUMBER FROM 0 TO 10"))
+            hand = int(input(who + " ENTER A NUMBER FROM 0 TO 10: "))
             print('%s played %s' % (who, hand))
             return hand
         def getResult():
+            print("WELCOME TO PRICE IS RIGHT\nYOU HAVE 3 TRIALS TO GUESS THE RIGHT PRICE ")
+            time.sleep(2)
             num =random.randrange(0,10)
-            print(num)
+            print("THIS IS THE RANDOM NUMBER CHOOSEN BY THE MACHINE " + str(num) + "\nNOTE THIS IS VISIBLE  SOLELY FOR DEBUGGING PURPOSES." )
             return num
+        '''
+        count=[0]  
+        def counter():
+            count[0] += 1
+            print(count[0])
+            return count[0]
+        '''
        
 
         def informTimeout():
@@ -71,6 +83,7 @@ def main():
             ctc_bob,
             dict(acceptWager=acceptWager, **player('Bob')))
         rpc('/forget/ctc', ctc_bob)
+        
 
     bob = Thread(target=play_bob)
     bob.start()
