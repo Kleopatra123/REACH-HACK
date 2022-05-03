@@ -95,7 +95,7 @@ export const main = Reach.App(() => {
   var [stage, hand1, hand2] = [0,0,0];
   invariant( balance() == 2 * wager);
 
-  while ((stage < 1) && (hand1 || hand2 != getResult1)  ) {
+  while ((stage < 3) && (hand1 || hand2 != getResult1)  ) {
     commit();
 
     Alice.only(() => {
@@ -126,7 +126,7 @@ export const main = Reach.App(() => {
     checkCommitment(commitAlice, saltAlice, handAlice);
     
   //outcome = winner(getResult1,handAlice, handBob);
-    [stage, hand1,hand2] = [stage + 1, hand1 + handAlice, hand2 + handBob];
+    [stage, hand1,hand2] = [stage + 1, handAlice, handBob];
     continue;
 
   }
