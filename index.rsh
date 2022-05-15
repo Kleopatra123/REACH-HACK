@@ -1,6 +1,7 @@
+
 "reach 0.1";
 
-const [ isOutcome, B_WINS, DRAW, A_WINS ] = makeEnum(3);
+const [ isOutcome, B_WINS, DRAW, A_WINS ] = makeEnum(3); 
 
 const winner = (getResult1,hand1, hand2) => {
   const x = getResult1;
@@ -15,7 +16,12 @@ const winner = (getResult1,hand1, hand2) => {
   }
   else  return DRAW;
 
-}
+};
+
+const combineRandom = (randomAlice, randomBob) => {
+  const result = randomAlice + randomBob;
+  return result;
+};
 
 /*
 forall(UInt, hand1 =>
@@ -53,9 +59,7 @@ const Player = {
   getHand: Fun([], UInt),
   seeOutcome: Fun([UInt], Null),
   informTimeout: Fun([], Null),
-  getResult: Fun([], UInt),
-  
-  
+  getRandom: Fun([], UInt),
 };
 
 export const main = Reach.App(() => {
@@ -80,24 +84,26 @@ export const main = Reach.App(() => {
   Alice.only(() => {
     const wager = declassify(interact.wager);
     const deadline = declassify(interact.deadline);
-    const getResult1 = declassify(interact.getResult());
-    
-   
+    const randomAlice = declassify(interact.getRandom());
   });
-  Alice.publish(wager, deadline, getResult1)
+  Alice.publish(wager, deadline, randomAlice)
     .pay(wager);
   commit();
 
   Bob.only(() => {
     interact.acceptWager(wager);
+    const randomBob = declassify(interact.getRandom());
   });
-  Bob.pay(wager)
+  Bob.publish(randomBob)
+  .pay(wager)
     .timeout(relativeTime(deadline), () => closeTo(Alice, informTimeout));
+
+  const random = combineRandom(randomAlice, randomBob);
 
   var [stage, hand1, hand2 ] = [3,0,0];
   invariant( balance() == 2 * wager);
 
-  while ((hand1!= getResult1 && hand2 != getResult1) && (stage > 0)) {
+  while ((hand1!= random && hand2 != random) && (stage > 0)) {
     commit();
 
     Alice.only(() => {
@@ -134,7 +140,7 @@ export const main = Reach.App(() => {
     continue;
 
   }
-  const outcome = winner(getResult1, hand1, hand2); 
+  const outcome = winner(random, hand1, hand2); 
 
   payWinner(outcome,wager, Alice, Bob);
 
