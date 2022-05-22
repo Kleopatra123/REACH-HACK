@@ -61,6 +61,8 @@ All in all, the Price is Right was a very interesting project to build. Using Re
 I strongly belive that Reach will revolutionise the development of Decentralised Application. 
 Get started using Reach [here](https://docs.reach.sh/tut/)
 
+Click [HERE](https://the-price-is-right.netlify.app) for the link to the demo.
+
 -------------------------------
 
 ### Acknowledegment
