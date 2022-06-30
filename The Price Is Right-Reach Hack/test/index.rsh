@@ -48,9 +48,7 @@ const Player = {
   seeOutcome: Fun([UInt], Null),
   informTimeout: Fun([], Null),
   getResult: Fun([], UInt),
-  newRound: Fun([], Null),
-  
-  
+  newRound: Fun([], Null),  
 };
 
 export const main = Reach.App(() => {
@@ -76,8 +74,8 @@ export const main = Reach.App(() => {
     const wager = declassify(interact.wager);
     const deadline = declassify(interact.deadline);
     const getResult1 = declassify(interact.getResult());
-    
-   
+      
+      
   });
   Alice.publish(wager, deadline, getResult1)
     .pay(wager);
@@ -98,8 +96,6 @@ export const main = Reach.App(() => {
 
     Alice.interact.newRound();
     Bob.interact.newRound();
-
-
 
 
     Alice.only(() => {
@@ -140,10 +136,6 @@ export const main = Reach.App(() => {
 
   payWinner(outcome,wager, Alice, Bob);
 
- 
-
-  
   commit();
-
- 
+  
 });
