@@ -17,12 +17,6 @@ const winner = (getResult1,hand1, hand2) => {
 
 }
 
-/*
-forall(UInt, hand1 =>
-  forall(UInt, hand2 =>
-    forall(UInt, getResult1=>
-      assert(isOutcome(winner(getResult1,hand1, hand2))))));
-*/
 
 const payWinner = (outcome, wager, Alice, Bob) => {
   if (outcome == DRAW) {
