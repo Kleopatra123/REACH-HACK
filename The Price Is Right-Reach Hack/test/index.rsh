@@ -118,9 +118,7 @@ export const main = Reach.App(() => {
       
       const [_commitAlice, _saltAlice] = makeCommitment(interact, _handAlice);
       const commitAlice = declassify(_commitAlice);
-      
-
-    });
+      });
     Alice.publish(commitAlice)
       .timeout(relativeTime(deadline), () => closeTo(Bob, informTimeout));
     commit();
