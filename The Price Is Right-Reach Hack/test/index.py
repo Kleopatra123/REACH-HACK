@@ -40,15 +40,6 @@ def main():
             return num
         def newRound():
             print("NEW ROUND")
-
-        
-        '''
-        count=[0]  
-        def counter():
-            count[0] += 1
-            print(count[0])
-            return count[0]
-        '''
        
 
         def informTimeout():
