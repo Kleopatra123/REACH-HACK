@@ -5,8 +5,6 @@ import random
 from threading import Thread
 from reach_rpc import mk_rpc
 
-
-
 def main():
     rpc, rpc_callbacks = mk_rpc()
 
