@@ -89,7 +89,7 @@ export const main = Reach.App(() => {
     .pay(wager);
   commit();
 
-  Alice.interact.waitingForAttacher();
+ 
 
 //Bob accepting or rejecting the wager
   Bob.only(() => {
