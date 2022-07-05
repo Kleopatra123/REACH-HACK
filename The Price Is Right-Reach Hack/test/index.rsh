@@ -140,7 +140,6 @@ export const main = Reach.App(() => {
       .timeout(relativeTime(deadline), () => closeTo(Bob, informTimeout));
     checkCommitment(commitAlice, saltAlice, handAlice);
     
-  //Outcome = winner(getResult1,handAlice, handBob);
     [stage, hand1, hand2] = [stage-1, handAlice, handBob];
     continue;
 
