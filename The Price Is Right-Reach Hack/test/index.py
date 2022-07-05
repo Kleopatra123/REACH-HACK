@@ -32,10 +32,10 @@ def main():
             hand = int(input(who + " ENTER A NUMBER FROM 0 TO 10: "))
             print('%s played %s' % (who, hand))
             return hand
-        def getResult():
+        def getRandom():
             print("WELCOME TO PRICE IS RIGHT\nYOU HAVE 3 TRIALS TO GUESS THE RIGHT PRICE ")
             time.sleep(1)
-            num =random.randrange(1,10)
+            num =random.randrange(1,5)
             print("THIS IS THE RANDOM NUMBER CHOOSEN BY THE MACHINE " + str(num) + "\nNOTE THIS IS VISIBLE  SOLELY FOR DEBUGGING PURPOSES." )
             return num
         def newRound():
@@ -51,7 +51,7 @@ def main():
 
         return {'stdlib.hasRandom': True,
                 'getHand':          getHand,
-                'getResult':        getResult,
+                'getRandom':        getRandom,
                 'newRound':         newRound,
                 'informTimeout':    informTimeout,
                 'seeOutcome':       seeOutcome,
